@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content%}
+<h2>Jimmy John's SliceCalc</h2>
+<br>
+<p>
+<blockquote>
+	Need a quick way of figuring out how long it's going to take for you to slice something? Need an estimate on when you'll finish? Want to compete against other employees and be the fastest slicer? This tool helps all of that. 😇
+</blockquote>
+</p>
+</div>
+<div class="panel panel-info">
+  <div class="panel-body">
+  	What would you like to do?
+  </div>
+</div>
+<center>
+<a href=" {{ url_for('create_profile') }} " class="btn btn-info btn-lg">Create a new profile</a>
+<a href=" {{ url_for('retrieve_profiles') }}" class="btn btn-info btn-lg">Select a previously created profile</a>
+<br>
+<br>
+</center>
+{% endblock %}

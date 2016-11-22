@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{ heading }}</h1>
+<div class="panel panel-success">
+  <div class="panel-heading">
+    <h3 class="panel-title">👁  What should the rows look like? </h3>
+  </div>
+  <div class="panel-body">
+    {{ stat1 }}
+  </div>
+</div>
+{% if errno %}
+<div class="panel panel-danger">
+  <div class="panel-heading">
+    <h3 class="panel-title">📥  How much do I need today?</h3>
+  </div>
+  <div class="panel-body">
+    
+    {{ errno }}
+  </div>
+</div>
+{% else %}
+<div class="panel panel-success">
+  <div class="panel-heading">
+    <h3 class="panel-title">📥  How much do I need today?</h3>
+  </div>
+  <div class="panel-body">
+    
+    {{ stat2 }}
+  </div>
+</div>
+<div class="panel panel-success">
+  <div class="panel-heading">
+    <h3 class="panel-title">⏰  How long should that take?</h3>
+  </div>
+  <div class="panel-body">
+    <ul>
+    	<li>{{ stat3[0] }}</li>
+    	<li>{{ stat3[1] }}</li>
+    </ul>
+  </div>
+</div>
+<div class="well">
+  <span class="glyphicon glyphicon-volume-up" aria-hidden="true"></span> {{ stat3[2] }}
+</div>
+{% endif %}
+<div class="panel panel-default">
+  <div class="panel-body">
+    <span class="glyphicon glyphicon-cutlery" aria-hidden="true"></span> Are you done slicing and <a href="{{ url_for('update_fb') }}">want to share your achievement on the Jimmy John's Facebook page?</a>
+  </div>
+</div>
+{% endblock %}

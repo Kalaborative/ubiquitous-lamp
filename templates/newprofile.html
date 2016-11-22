@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+	<blockquote>Please complete the form below. For time measurements, try to use your best guess!</blockquote>
+	<br>
+	<p>Name:</p>
+	<form action="{{ url_for('create_profile') }}" method="post">
+		<input type="text" name="fname" placeholder="Your first name">
+		<input type="text" name="lname" placeholder="Your last name">
+		<br>
+		<br>
+		<p>
+			<br>
+			About how long does it take for you to slice turkey? <input type="number" name="turktime" style="width: 40px"> minutes
+		</p>
+		<p>Ham? <input type="number" name="hamtime" style="width: 40px"> minutes</p>
+		<p>Cheese? <input type="number" name="chztime" style="width: 40px"> minutes</p>
+		<p>Vito? <input type="number" name="vittime" style="width: 40px"> minutes</p>
+		<p>Beef? <input type="number" name="bftime" style="width: 40px"> minutes</p>
+		<input type="submit" name="Submit" class="btn btn-success">
+	</form>
+{% for msg in get_flashed_messages() %}
+<div class="alert alert-success">
+  <strong>{{ msg }} </strong>You may now <a href="{{ url_for('retrieve_profiles') }}">select your registered profile.</a>
+</div>
+{% endfor %}
+{% endblock %}

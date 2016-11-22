@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<form method="post" action="{{ url_for('update_fb') }}">
+<div class="form-group">
+  <label class="control-label" for="focusedInput">Enter your name:</label>
+  <input class="form-control" type="text" name="slname">
+</div>
+<div class="form-group">
+  <label class="control-label" for="focusedInput">What did you slice today?</label>
+  <input class="form-control" type="text" name="fd">
+</div>
+<div class="form-group">
+  <label class="control-label" for="inputLarge">Add your custom message!</label>
+  <input class="form-control input-lg" type="text" name='msg' placeholder="Go on, be creative!">
+</div>
+	<input type="submit" name="submit" value="Share!">
+</form>
+{% for msg in get_flashed_messages() %}
+	<div class="well">
+		🎊 {{ msg }}
+	</div>
+{% endfor %}
+{% endblock %}

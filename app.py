@@ -123,5 +123,21 @@ def update_fb():
 	return render_template('updater.html')
 
 
+@app.route('/search', methods=["POST", "GET"])
+def search():
+	if request.method == "POST":
+		my_result = []
+		query = request.form['search']
+		with sqlite3.connect('jj_slicing.db') as connection:
+			c = connection.cursor()
+			c.execute("SELECT * FROM Profiles")
+			tables = c.fetchall()
+		for t in tables:
+			if query in t[0]:
+				my_result.append(t)
+		renum = len(my_result)
+		return render_template('searches.html', results=my_result, renum=renum)
+
+
 if __name__ == '__main__':
 	app.run(debug=True)

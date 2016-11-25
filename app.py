@@ -98,9 +98,6 @@ def results():
 		for n in ns:
 			if n.isdigit():
 				num_packs = n
-				break
-			else:
-				num_packs = None
 		timestatus = time_to_slice(num_packs, food, slicetime, fname)
 		if 'enough' in numstatus:
 			errstatus = numstatus

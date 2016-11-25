@@ -9,6 +9,7 @@ app = Flask(__name__)
 app.secret_key = 'my precious'
 slicetime = []
 supername = ''
+num_packs = 5
 introfood = ["So you're slicing {}. Interesting!", "You are going to be slicing {}.", "{}, huh? Interesting choice!", "How about that {}?", "{} sure is tasty! Let's help you out.", "Let's talk {}.", "Everything you need to know about {}."]
 
 connection = sqlite3.connect('jj_slicing.db')
@@ -93,6 +94,7 @@ def results():
 		greet = choice(introfood).format(food).capitalize()
 		daystatus = day_of_week(food)
 		amt = request.form['numpacks']
+		global num_packs
 		numstatus = slice_calc(food, amt)
 		ns = numstatus.split()
 		for n in ns:

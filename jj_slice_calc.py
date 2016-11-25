@@ -7,7 +7,7 @@ import facebook
 
 # NOTE: MAKE SURE TO RUN sqlite3_db_profiles.py BEFORE RUNNING THIS CODE
 # OTHERWISE THE PROFILE FEATURE WILL NOT WORK ! ! !
-
+q3 = "Drew"
 
 # define our global variables
 # In this case, we set these to what we believed would be

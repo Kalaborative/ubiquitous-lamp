@@ -176,6 +176,8 @@ def time_to_slice(num_packs, food, slicetime, q3):
 # how likely would it be for an order to just pop in once or twice.
 # This would be EXTREMELY difficult to do, so I simply guestimated
 # by applying a small but random amount of minutes to our time.
+
+
 def adjusted_time(ntime):
   if ntime < 10:
     ntime = ntime + randint(1, 4)
@@ -229,9 +231,11 @@ def overhour_filter(n):
     if min_v == 0:
       min_v = min_v + 1
     new_now = now + timedelta(minutes=min_v, hours=hour_v)
-    end_time = new_now.strftime("%I:%M %p")
+    new_now = new_now - timedelta(hours=6)
+    end_time = new_now.strftime("%-I:%M %p")
     done = "You should be done by about %s." % end_time
   return done
+
 
 def is_negative(n):
   if int(n) <= 0:

@@ -10,7 +10,6 @@ from jj_slice_calc import fb_post_update
 from random import choice
 app = Flask(__name__)
 app.secret_key = 'my precious'
-slicetime = []
 supername = ''
 num_packs = 5
 introfood = ["So you're slicing {}. Interesting!", "You are going to be slicing {}.", "{}, huh? Interesting choice!", "How about that {}?", "{} sure is tasty! Let's help you out.", "Let's talk {}.", "Everything you need to know about {}."]
@@ -285,18 +284,8 @@ def retrieve_profiles():
 @app.route('/welcome', methods=["POST", "GET"])
 def welcome():
 	if request.method == "POST" or request.method == "GET":
-		prof = []
 		global supername
 		supername = request.form['comp_select']
-		prof.append(supername)
-		with sqlite3.connect('jj_slicing.db') as connection:
-			c = connection.cursor()
-			c.execute("SELECT turk,ham,cheese,vito,beef FROM Profiles WHERE Name=?", prof)
-			slicedump = c.fetchall()
-			global slicetime
-			del slicetime[:]
-			for s in slicedump:
-				slicetime.append(s)
 		return render_template('welcome.html', name=supername)
 
 
@@ -304,34 +293,32 @@ def welcome():
 def results():
 	if request.method == "POST" or request.method == "GET":
 		prof = []
-		global supername
 		prof.append(supername)
 		with sqlite3.connect('jj_slicing.db') as connection:
 			c = connection.cursor()
 			c.execute("SELECT turk,ham,cheese,vito,beef FROM Profiles WHERE Name=?", prof)
 			slicedump = c.fetchall()
-			global slicetime
-			del slicetime[:]
+			slicetimed = []
 			for s in slicedump:
-				slicetime.append(s)
-		idx = supername.find(" ")
-		fname = supername[:idx]
-		food = request.form['foodchoice']
-		greet = choice(introfood).format(food).capitalize()
-		daystatus = day_of_week(food)
-		amt = request.form['numpacks']
-		global num_packs
-		numstatus = slice_calc(food, amt)
-		ns = numstatus.split()
-		for n in ns:
-			if n.isdigit():
-				num_packs = n
-		timestatus = time_to_slice(num_packs, food, slicetime, fname)
-		if 'enough' in numstatus:
-			errstatus = numstatus
-			return render_template('display.html', heading=greet, stat1=daystatus, stat2=numstatus, errno=errstatus)
-		else:
-			return render_template('display.html', heading=greet, stat1=daystatus, stat2=numstatus, stat3=timestatus, errno=None)
+				slicetimed.append(s)
+			idx = supername.find(" ")
+			fname = supername[:idx]
+			food = request.form['foodchoice']
+			greet = choice(introfood).format(food).capitalize()
+			daystatus = day_of_week(food)
+			amt = request.form['numpacks']
+			global num_packs
+			numstatus = slice_calc(food, amt)
+			ns = numstatus.split()
+			for n in ns:
+				if n.isdigit():
+					num_packs = n
+			timestatus = time_to_slice(num_packs, food, slicetimed, fname)
+			if 'enough' in numstatus:
+				errstatus = numstatus
+				return render_template('display.html', heading=greet, stat1=daystatus, stat2=numstatus, errno=errstatus)
+			else:
+				return render_template('display.html', heading=greet, stat1=daystatus, stat2=numstatus, stat3=timestatus, errno=None)
 
 
 @app.route('/fbupdate', methods=["POST", "GET"])
